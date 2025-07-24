@@ -1,0 +1,34 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Test 1
+      id: test-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test 1
+        setup-command: g++ Tests/test1.cpp -o test1
+        command: "./test1"
+        input: ''
+        expected-output: 'The interleaved array is: 12 1 45 24 2 30 6 3 25 8 4 2 24
+          5 22 16 1 11 9 2 2 13 6 16 12 7 11 '
+        comparison-method: contains
+        timeout: 1
+        max-score: 3
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
+      with:
+        runners: test-1
