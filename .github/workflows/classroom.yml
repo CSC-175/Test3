@@ -38,10 +38,49 @@ jobs:
         comparison-method: contains
         timeout: 1
         max-score: 3
+    - name: Test 3
+      id: test-3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test 3
+        setup-command: g++ Tests/test3.cpp -test3
+        command: "./test3"
+        input: ''
+        expected-output: 'The interleaved array is: 5 2 3 10 4 6 6 9 12 '
+        comparison-method: contains
+        timeout: 1
+        max-score: 3
+    - name: Test 4
+      id: test-4
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test 4
+        setup-command: g++ Tests/test4.cpp -o test4
+        command: "./test4"
+        input: ''
+        expected-output: 'The interleaved array is: 10 15 20 25 30 35 40 '
+        comparison-method: contains
+        timeout: 1
+        max-score: 3
+    - name: Test 5
+      id: test-5
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test 5
+        setup-command: g++ Tests/test5.cpp -o test5
+        command: "./test5"
+        input: ''
+        expected-output: 'The interleaved array is: 1 2 3 4 5 6 '
+        comparison-method: contains
+        timeout: 1
+        max-score: 3
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
         TEST-2_RESULTS: "${{steps.test-2.outputs.result}}"
+        TEST-3_RESULTS: "${{steps.test-3.outputs.result}}"
+        TEST-4_RESULTS: "${{steps.test-4.outputs.result}}"
+        TEST-5_RESULTS: "${{steps.test-5.outputs.result}}"
       with:
-        runners: test-1,test-2
+        runners: test-1,test-2,test-3,test-4,test-5
