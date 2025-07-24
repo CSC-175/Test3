@@ -26,9 +26,22 @@ jobs:
         comparison-method: contains
         timeout: 1
         max-score: 3
+    - name: Test 2
+      id: test-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test 2
+        setup-command: g++ Tests/test2.cpp -o test2
+        command: "./test2"
+        input: ''
+        expected-output: 'The interleaved array is: 23 9 2 52 10 22 16 42 89 15 '
+        comparison-method: contains
+        timeout: 1
+        max-score: 3
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
+        TEST-2_RESULTS: "${{steps.test-2.outputs.result}}"
       with:
-        runners: test-1
+        runners: test-1,test-2
