@@ -4,4 +4,4 @@ project(Coding_Problem3)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Coding_Problem3
-    Tests/test5.cpp)
+    P3Driver.cpp)
